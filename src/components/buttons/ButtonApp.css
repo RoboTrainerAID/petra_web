@@ -1,0 +1,40 @@
+.app {
+    width: fit-content;
+    text-align: center;
+}
+
+.app-button {
+    height: 16rem;
+    width: 16rem;
+}
+
+.app-text {
+    color: #363636;
+    font-size: 2rem;
+    margin-top: 10px;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .app-button {
+        height: 6em;
+        width: 6em;
+    }
+    .app-text {
+    color: #363636;
+    font-size: 17px;
+    margin-top: 10px;
+    text-align: center;
+}
+}
+
+@media (max-width: 813px) and (max-height: 415px) {
+   .app-button {
+        height: 6em;
+        width: 6em;
+    }
+    .app-text {
+    font-size: 17px;
+
+}
+}

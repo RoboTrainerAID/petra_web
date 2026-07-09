@@ -1,0 +1,78 @@
+{
+  "name": "petra",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@date-io/date-fns": "^1.3.13",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/data-grid": "^4.0.0-alpha.31",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@material-ui/pickers": "^3.3.10",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "antd": "^4.16.5",
+    "axios": "^0.21.4",
+    "bootstrap": "^4.6.0",
+    "bootstrap-select": "^1.13.18",
+    "create-react-class": "^15.7.0",
+    "date-fns": "^2.22.1",
+    "i18next": "^20.2.2",
+    "i18next-http-backend": "^1.2.2",
+    "iframe": "^1.0.0",
+    "material-table": "^1.69.3",
+    "moment": "^2.29.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
+    "react-bootstrap-date-picker": "^5.1.0",
+    "react-css-loaders": "0.0.6",
+    "react-datepicker": "^4.1.1",
+    "react-dom": "^17.0.2",
+    "react-flags-select": "^2.1.2",
+    "react-full-screen": "^1.0.2",
+    "react-fullscreen-crossbrowser": "^1.1.2",
+    "react-i18next": "^11.8.15",
+    "react-icons": "^4.2.0",
+    "react-idle-timer": "^4.6.4",
+    "react-iframe": "^1.8.0",
+    "react-native-vector-icons": "^8.1.0",
+    "react-query": "^3.39.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-select": "^4.3.0",
+    "react-wifi-indicator": "^1.0.1",
+    "react-xml-parser": "^1.1.8",
+    "reactour": "^1.18.4",
+    "rss-parser": "^3.12.0",
+    "styled-components": "^4.4.1",
+    "web-vitals": "^1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.0"
+  }
+}

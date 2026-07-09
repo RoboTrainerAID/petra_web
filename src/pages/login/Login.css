@@ -1,0 +1,22 @@
+.form {
+    margin-bottom: 2em;
+    width: 100%;
+}
+.rfid-icon {
+    background-color: #6df1d4;
+    border-radius: 50%;
+    border: #6df1d4 2px solid;
+    padding: 8px;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+.fingerprint-icon {
+    background-color: #6df1d4;;
+    border-radius: 50%;
+    border: #6df1d4 2px solid;
+    padding: 8px;
+    margin-top: 15px;
+}
+
+
+

@@ -1,0 +1,26 @@
+.emergency-button {
+    width: 175px;
+    height: 60px;
+    font-weight: bold;
+    margin-right: -10px;
+}
+
+.emergency-icon {
+    font-size: 25px;
+    float: left;
+    margin-left: 0px;
+    margin-right: 5px;
+    margin-top: 4px;
+}
+
+.emergency-text {
+    margin-right: 0px;
+    float: inside;
+}
+
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+}
+

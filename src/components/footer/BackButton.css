@@ -1,0 +1,23 @@
+.back-button {
+    width: 150px;
+    height: 60px;
+    padding-left: 5px;
+}
+
+.back-icon {
+    font-size: 25px;
+    float: left;
+    margin-left: 6px;
+    margin-top: 4px;
+}
+
+@media (max-width: 767px) {
+.back-button-mobile {
+    width: 130px;
+    height: 50px;
+}
+.back-icon-mobile {
+    font-size: 25px;
+    margin-left: 6px;
+    margin-top: 4px;
+}}
