@@ -8,6 +8,6 @@ docker run \
     -it --privileged \
     --net host \
     -e DISPLAY=$DISPLAY \
-    -e REACT_APP_FLASK_BACKEND_URL=http://172.31.1.235:5000 \
+    -e REACT_APP_FLASK_BACKEND_URL=http://localhost:5000 \
     --rm \
     petra_web:nodejs14
