@@ -69,7 +69,7 @@
   "translation_text_english": "Englisch",
   "translation_text_french": "Französisch",
   "translation_text_croatian": "Kroatisch",
-  "translation_text_russian": "Russisch",
+  "translation_text_ukrainian": "Ukrainisch",
   "translation_text_turkish": "Türkisch",
   "translation_button_translate": "Übersetzen",
   "entertainment_app_news": "Nachrichten",
@@ -265,5 +265,7 @@
   "transport_edit_override_start": "Start-Ort überschreiben",
   "transport_edit_cancel": "Abbrechen",
   "transport_new_submit": "Transport speichern",
-  "transport_edit_submit": "Änderungen speichern"
+  "transport_edit_submit": "Änderungen speichern",
+  "home_patient_app_questionnaire": "Fragebogen",
+  "home_tour_questionnaire": "Um einen Fragebogen zu starten, können Sie hier klicken."
 }

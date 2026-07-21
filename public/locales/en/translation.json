@@ -69,7 +69,7 @@
   "translation_text_english": "English",
   "translation_text_french": "French",
   "translation_text_croatian": "Craotian",
-  "translation_text_russian": "Russisch",
+  "translation_text_ukrainian": "Ukrainian",
   "translation_text_turkish": "Turkish",
   "translation_button_translate": "Translate",
   "entertainment_app_news": "News",
@@ -265,5 +265,7 @@
   "transport_edit_override_start": "Override start location",
   "transport_edit_cancel": "Cancel",
   "transport_new_submit": "Save transport",
-  "transport_edit_submit": "Save changes"
+  "transport_edit_submit": "Save changes",
+  "home_patient_app_questionnaire": "Questionnaire",
+  "home_tour_questionnaire": "To start a questionnaire, you can click here."
 }

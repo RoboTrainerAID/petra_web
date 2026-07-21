@@ -9,7 +9,7 @@ import german from "../../assets/flag_german.png";
 import english from "../../assets/flag_english.png";
 import french from "../../assets/flag_french.png";
 import croatian from "../../assets/flag_croatian.png";
-import russian from "../../assets/flag_russian.png";
+import ukraine from "../../assets/flag_ukraine.png";
 import turkish from "../../assets/flag_turkish.png";
 
 //Components
@@ -100,10 +100,10 @@ export default function TranslatorOutput() {
                         <span className={classes.text}>{t('translation_text_croatian')}</span>
                     </div>
                 </MenuItem>
-                <MenuItem value="ru">
+                <MenuItem value="ua">
                     <div>
-                        <img src={russian} className={classes.image} alt="russian"/>
-                        <span className={classes.text}>{t('translation_text_russian')}</span>
+                        <img src={ukraine} className={classes.image} alt="ukraine"/>
+                        <span className={classes.text}>{t('translation_text_ukrainian')}</span>
                     </div>
                 </MenuItem>
                 <MenuItem value="tu">
