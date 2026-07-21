@@ -3,4 +3,9 @@ docker build -t petra_web:nodejs14 --build-arg="BACKEND_URL=http://localhost:500
 
 echo "Run Container"
 xhost + local:root
-docker run -P --name petra_web -it --privileged --net host -e DISPLAY=$DISPLAY --rm petra_web:nodejs14
+docker run \
+  -p 3000:3000 \
+  --name petra_web \
+  -it \
+  --rm \
+  petra_web:nodejs14

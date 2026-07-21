@@ -36,4 +36,4 @@ ARG BACKEND_URL
 ENV REACT_APP_FLASK_BACKEND_URL=$BACKEND_URL
 RUN npm run build
 
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["serve", "-n", "-s", "build", "-l", "3000"]
