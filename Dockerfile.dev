@@ -1,0 +1,39 @@
+##############################################################################
+##                                 Base Image                               ##
+##############################################################################
+FROM node:14
+ENV TZ=Europe/Berlin
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+##############################################################################
+##                                 Global Dependencies                      ##
+##############################################################################
+EXPOSE 3000
+# USER node
+
+##############################################################################
+##                                Install Dependencies                      ##
+##############################################################################
+WORKDIR /home/node
+
+COPY ./package.json ./petra_web/
+WORKDIR /home/node/petra_web
+
+RUN npm install --legacy-peer-deps
+
+WORKDIR /home/node
+COPY . ./petra_web
+
+##############################################################################
+##                              Development Run                             ##
+##############################################################################
+WORKDIR /home/node/petra_web
+
+ARG BACKEND_URL
+ENV REACT_APP_FLASK_BACKEND_URL=$BACKEND_URL
+
+# Make React development server accessible from outside the container
+ENV HOST=0.0.0.0
+
+CMD ["npm", "start"]
