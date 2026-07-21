@@ -101,7 +101,7 @@ export default function FooterPatient({ triggerEmergency, showEmergencyButton, t
     const classes = useStyles();
     let {pathname} = useLocation();
 
-    if (pathname !== '/' && pathname !== '/navigation' && pathname !== '/translation' && pathname !== '/entertainment' && pathname !== '/entertainment/media' && pathname !== '/entertainment/news' && pathname !== '/entertainment/games') return null;
+    if (pathname !== '/' && pathname !== '/navigation' && pathname !== '/questionnaire' && pathname !== '/translation' && pathname !== '/entertainment' && pathname !== '/entertainment/media' && pathname !== '/entertainment/news' && pathname !== '/entertainment/games') return null;
 
     return (
         <AppBar position="fixed" className={classes.appBar}>

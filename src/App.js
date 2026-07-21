@@ -21,6 +21,7 @@ import HomePatient from "./pages/home/HomePatient";
 import HomeEmployee from "./pages/home/HomeEmployee";
 import Login from "./pages/login/Login";
 import Navigation from "./pages/navigation/Navigation";
+import Questionnaire from "./pages/questionnaire/Questionnaire";
 import Translation from "./pages/translation/Translation";
 import Entertainment from "./pages/entertainment/Entertainment";
 import MediaLib from "./pages/medialibrary/MediaLib";
@@ -205,6 +206,7 @@ export default function App() {
                     <AlertLogout open={open} setOpen={setOpen} />
                     <SidebarPatient />
 
+                
                     <Route exact path="/">
                         <div className="layout-home">
                             <HomePatient setIsTourOpen={setIsTourOpen} transport={currentTransport}/>
@@ -213,6 +215,12 @@ export default function App() {
 
                     <Route exact path="/navigation">
                         <Navigation transport={currentTransport} triggerEmergency={triggerEmergency} requireLogin={requireLogin}/>
+                    </Route>
+
+                    <Route exact path="/questionnaire">
+                        <div className="layout-home">
+                            <Questionnaire />
+                        </div>
                     </Route>
 
                     <Route exact path="/translation">
@@ -242,6 +250,7 @@ export default function App() {
                     <Route exact path="/login">
                         <Login />
                     </Route>
+                    
 
                     <HeaderEmployee setOpen={setOpen} />
                     <AlertLogin setOpen={setOpen} />

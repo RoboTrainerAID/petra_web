@@ -7,7 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Container, Grid} from '@material-ui/core';
 import NavigationApp from "../../components/buttons/NavigationApp";
 import TranslationAppPatient from "../../components/buttons/TranslationAppPatient";
-import EntertainmentApp from "../../components/buttons/EntertainmentApp";
+import QuestionnaireApp from "../../components/buttons/QuestionnaireApp";
 import {PetraTextDialog} from "../../components/dialog/PetraTextDialog";
 import {useTranslation} from "react-i18next";
 import InfoTourTargets from "../info/InfoTourTargets";
@@ -44,14 +44,11 @@ export default function HomePatient({transport}) {
             <HomeTour transport={transport} show={showTour} onClose={() => setShowTour(false)}/>
             <Container className={[classes.root, "step5"]}>
                 <Grid container justify="flex-start" direction="row" spacing="1">
-                    <Grid item md={4} className={[classes.item, InfoTourTargets.APP_NAVIGATION.css]}>
+                    <Grid item sm={6} md={6} className={[classes.item, InfoTourTargets.APP_NAVIGATION.css]}>
                         <NavigationApp/>
                     </Grid>
-                    <Grid item md={4} className={[classes.item, InfoTourTargets.APP_TRANSLATION.css]}>
-                        <TranslationAppPatient/>
-                    </Grid>
-                    <Grid item md={4} className={[classes.item, InfoTourTargets.APP_ENTERTAINMENT.css]}>
-                        <EntertainmentApp/>
+                    <Grid item sm={6} md={6} className={[classes.item, InfoTourTargets.APP_QUESTIONNAIRE.css]}>
+                        <QuestionnaireApp/>
                     </Grid>
                 </Grid>
                 <PetraTextDialog startTour={() => setShowTour(true)} title={t("home_view_greeting")} text={[

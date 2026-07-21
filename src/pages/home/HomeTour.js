@@ -24,12 +24,8 @@ export function HomeTour({show, onClose, transport}) {
             content: <InfoTourStep text={t("home_tour_navigation")}/>
         },
         {
-            selector: InfoTourTargets.APP_TRANSLATION.target,
-            content: <InfoTourStep text={t("home_tour_translation")}/>
-        },
-        {
-            selector: InfoTourTargets.APP_ENTERTAINMENT.target,
-            content: <InfoTourStep text={t("home_tour_entertainment")}/>,
+            selector: InfoTourTargets.APP_QUESTIONNAIRE.target,
+            content: <InfoTourStep text={t("home_tour_questionnaire")}/>
         },
         {
             selector: InfoTourTargets.APP_HOME.target,

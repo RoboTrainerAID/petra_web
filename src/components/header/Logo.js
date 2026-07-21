@@ -12,8 +12,8 @@ const useStyles = makeStyles(() => ({
         height: 45,
         width: 90,
         '@media (max-width: 767px)': {
-            height: 40,
-            width: 80,
+            height: 45,
+            width: 90,
         },
     }
 }));

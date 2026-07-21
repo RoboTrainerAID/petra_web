@@ -22,8 +22,7 @@ const targets = {
     MAP_STOPS: createTarget("map-stops"),
     APP_HOME: createTarget("app-home"),
     APP_NAVIGATION: createTarget("app-navigation"),
-    APP_TRANSLATION: createTarget("app-translation"),
-    APP_ENTERTAINMENT: createTarget("app-entertainment")
+    APP_QUESTIONNAIRE: createTarget("app-questionnaire")
 };
 
 export default targets;

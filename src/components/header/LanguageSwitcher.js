@@ -9,7 +9,7 @@ import german from "../../assets/flag_german.png";
 import english from "../../assets/flag_english.png";
 import french from "../../assets/flag_french.png";
 import croatian from "../../assets/flag_croatian.png";
-import russian from "../../assets/flag_russian.png";
+import ukraine from "../../assets/flag_ukraine.png";
 import turkish from "../../assets/flag_turkish.png";
 
 //Components
@@ -62,8 +62,8 @@ export default function LanguageSwitcher() {
                 <MenuItem value="cr">
                     <div><img src={croatian} width={"55px"} height={"35px"} alt="Cr"/></div>
                 </MenuItem>
-                <MenuItem value="ru">
-                    <div><img src={russian} width={"55px"} height={"35px"} alt="Ru"/></div>
+                <MenuItem value="ua">
+                    <div><img src={ukraine} width={"55px"} height={"35px"} alt="Ua"/></div>
                 </MenuItem>
                 <MenuItem value="tu">
                     <div><img src={turkish} width={"55px"} height={"35px"} alt="Tu"/></div>
