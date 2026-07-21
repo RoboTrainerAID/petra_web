@@ -3,11 +3,10 @@
 echo "Run Container"
 xhost + local:root
 docker run \
-    -P \
-    --name petra_web \
-    -it --privileged \
-    --net host \
-    -e DISPLAY=$DISPLAY \
-    -e REACT_APP_FLASK_BACKEND_URL=http://localhost:5000 \
-    --rm \
-    petra_web:nodejs14
+  -p 3000:3000 \
+  --name petra_web \
+  -it \
+  -e DISPLAY=$DISPLAY \
+  -e REACT_APP_FLASK_BACKEND_URL=http://localhost:5000 \
+  --rm \
+  petra_web:nodejs14
