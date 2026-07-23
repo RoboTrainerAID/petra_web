@@ -1,326 +1,173 @@
-import React, {useCallback, useMemo, useState} from "react";
-import {Container, Divider, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Paper, Radio, RadioGroup, Slider, TextField, Typography, Chip} from "@material-ui/core";
-import {makeStyles} from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
+import { Container, Paper, Typography, LinearProgress, Chip, Box, makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(() => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        alignItems: 'center',
-        maxWidth: '72em',
-        width: '100%',
-        padding: '2rem 0',
-        '@media (max-width: 767px)': {
-            width: '92%',
-            paddingTop: '1rem',
-        },
-    },
-    paper: {
-        width: '100%',
-        padding: '2rem',
-        '@media (max-width: 767px)': {
-            padding: '1.25rem',
-        },
-    },
-    header: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '.75rem',
-        marginBottom: '1.5rem',
-    },
-    stepRow: {
-        display: 'flex',
-        gap: '.75rem',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-    },
-    stepChip: {
-        fontWeight: 600,
-    },
-    section: {
-        marginTop: '1.5rem',
-    },
-    field: {
-        width: '100%',
-        marginTop: '1rem',
-    },
-    questionCard: {
-        border: '1px solid rgba(0, 0, 0, 0.08)',
-        borderRadius: '12px',
-        padding: '1rem 1.1rem',
-        background: 'rgba(255, 255, 255, 0.72)',
-    },
-    questionHeader: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: '1rem',
-        marginBottom: '.75rem',
-    },
-    sliderRow: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1rem',
-    },
-    slider: {
-        flexGrow: 1,
-    },
-    helper: {
-        marginTop: '.5rem',
-        color: '#666',
-    },
-    actions: {
-        marginTop: '1.75rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        gap: '1rem',
-        flexWrap: 'wrap',
-    },
-    summaryBox: {
-        marginTop: '1.5rem',
-        padding: '1rem',
-        borderRadius: '12px',
-        background: 'rgba(0, 123, 255, 0.06)',
-    },
-    summaryGrid: {
-        marginTop: '.5rem',
-    },
+import StartScreen from './StartScreen';
+import PersonalInfoStep from './PersonalInfoStep';
+import ExperimentStep from './ExperimentStep';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3, 0),
+  },
+  paper: {
+    padding: theme.spacing(3),
+    height: '75vh',             // Constrain height so inner container can scroll
+    maxHeight: '800px',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  header: {
+    flexShrink: 0,              // Keep header fixed at top
+    marginBottom: theme.spacing(2),
+  },
+  content: {
+    flex: 1,                    // Occupy remaining height
+    overflowY: 'auto',          // Enable vertical scrolling
+    minHeight: 0,               // Allow flex item to shrink below content size
+    paddingRight: theme.spacing(1), // Prevents scrollbar from touching text
+  },
 }));
 
-const genderOptions = [
-    {value: 'female', label: 'Female'},
-    {value: 'male', label: 'Male'},
-    {value: 'non_binary', label: 'Non-binary / diverse'},
-    {value: 'prefer_not_to_say', label: 'Prefer not to say'},
-];
+const INITIAL_TLX = {
+  mental_demand: null,
+  physical_demand: null,
+  temporal_demand: null,
+  performance: null,
+  effort: null,
+  frustration: null,
+};
 
-const nasaQuestions = [
-    {key: 'mental_demand', label: 'Mental demand'},
-    {key: 'physical_demand', label: 'Physical demand'},
-    {key: 'temporal_demand', label: 'Temporal demand'},
-    {key: 'performance', label: 'Performance'},
-    {key: 'effort', label: 'Effort'},
-    {key: 'frustration', label: 'Frustration'},
-];
+// Configure total experiments needed for your study
+const TOTAL_EXPERIMENTS = 3;
 
-const initialTlxScores = nasaQuestions.reduce((accumulator, question) => {
-    accumulator[question.key] = 50;
-    return accumulator;
-}, {});
+export default function QuestionnaireContainer() {
+  const classes = useStyles();
+  const { t } = useTranslation();
 
-export default function Questionnaire() {
-    const classes = useStyles();
-    const [step, setStep] = useState(0);
-    const [completedData, setCompletedData] = useState(null);
+  // Mode: 'start' | 'personal' | 'experiments' | 'summary'
+  const [screen, setScreen] = useState('start');
+  const [personalInfo, setPersonalInfo] = useState(null);
+  const [currentExpIndex, setCurrentExpIndex] = useState(0);
+  
+  // Array holding scores for each experiment iteration
+  const [experimentScores, setExperimentScores] = useState(
+    Array.from({ length: TOTAL_EXPERIMENTS }, () => ({ ...INITIAL_TLX }))
+  );
 
-    const [age, setAge] = useState('');
-    const [gender, setGender] = useState('');
-    const [personalErrors, setPersonalErrors] = useState({age: false, gender: false});
-    const [tlxScores, setTlxScores] = useState(initialTlxScores);
+  // Auto-save state changes locally
+  useEffect(() => {
+    if (screen !== 'start') {
+      const sessionData = { screen, personalInfo, currentExpIndex, experimentScores };
+      localStorage.setItem('nasa_tlx_session', JSON.stringify(sessionData));
+    }
+  }, [screen, personalInfo, currentExpIndex, experimentScores]);
 
-    const progressValue = step === 0 ? 50 : 100;
+  const handleStartNew = () => {
+    localStorage.removeItem('nasa_tlx_session');
+    setPersonalInfo(null);
+    setCurrentExpIndex(0);
+    setExperimentScores(Array.from({ length: TOTAL_EXPERIMENTS }, () => ({ ...INITIAL_TLX })));
+    setScreen('personal');
+  };
 
-    const ageNumber = Number(age);
-    const isAgeValid = Number.isInteger(ageNumber) && ageNumber >= 0 && ageNumber <= 120;
-    const isPersonalStepValid = isAgeValid && !!gender;
+  const handleContinueSession = (savedData) => {
+    setPersonalInfo(savedData.personalInfo);
+    setCurrentExpIndex(savedData.currentExpIndex ?? 0);
+    setExperimentScores(savedData.experimentScores ?? Array.from({ length: TOTAL_EXPERIMENTS }, () => ({ ...INITIAL_TLX })));
+    setScreen(savedData.screen || 'personal');
+  };
 
-    const handleNext = useCallback(() => {
-        const nextErrors = {
-            age: !isAgeValid,
-            gender: !gender,
-        };
-        setPersonalErrors(nextErrors);
+  const handlePersonalSubmit = (data) => {
+    setPersonalInfo(data);
+    setScreen('experiments');
+  };
 
-        if (nextErrors.age || nextErrors.gender) {
-            return;
-        }
+  const handleScoreChange = (key, value) => {
+    setExperimentScores((prev) => {
+      const updated = [...prev];
+      updated[currentExpIndex] = { ...updated[currentExpIndex], [key]: value };
+      return updated;
+    });
+  };
 
-        setStep(1);
-    }, [gender, isAgeValid]);
+  const handleNextExperiment = () => {
+    if (currentExpIndex < TOTAL_EXPERIMENTS - 1) {
+      setCurrentExpIndex((prev) => prev + 1);
+    } else {
+      setScreen('summary');
+      localStorage.removeItem('nasa_tlx_session'); // Clear session upon complete finish
+    }
+  };
 
-    const handleSubmit = useCallback(() => {
-        const submission = {
-            personalInfo: {
-                age: ageNumber,
-                gender,
-            },
-            nasaTlx: tlxScores,
-        };
+  const handleBackExperiment = () => {
+    if (currentExpIndex > 0) {
+      setCurrentExpIndex((prev) => prev - 1);
+    } else {
+      setScreen('personal');
+    }
+  };
 
-        setCompletedData(submission);
-    }, [ageNumber, gender, tlxScores]);
+  return (
+    <Container maxWidth="md" className={classes.root}>
+      <Paper elevation={3} className={classes.paper}>
+        <div className={classes.header}>
+          <Typography variant="h4">{t('questionnaire.title')}</Typography>
+          <Typography color="textSecondary">{t('questionnaire.description')}</Typography>
 
-    const restart = useCallback(() => {
-        setStep(0);
-        setAge('');
-        setGender('');
-        setPersonalErrors({age: false, gender: false});
-        setTlxScores(initialTlxScores);
-        setCompletedData(null);
-    }, []);
+          {screen !== 'start' && screen !== 'summary' && (
+            <Box mt={2}>
+              <Box display="flex" gap={1} mb={1}>
+                <Chip
+                  label={t('questionnaire.personal.title')}
+                  color={screen === 'personal' ? 'primary' : 'default'}
+                />
+                <Chip
+                  label={t('questionnaire.tlx.experimentTitle', {
+                    current: currentExpIndex + 1,
+                    total: TOTAL_EXPERIMENTS,
+                  })}
+                  color={screen === 'experiments' ? 'primary' : 'default'}
+                />
+              </Box>
+              <LinearProgress
+                variant="determinate"
+                value={screen === 'personal' ? 20 : 20 + ((currentExpIndex + 1) / TOTAL_EXPERIMENTS) * 80}
+              />
+            </Box>
+          )}
+        </div>
 
-    const handleScoreChange = useCallback((questionKey, value) => {
-        setTlxScores(previousScores => ({
-            ...previousScores,
-            [questionKey]: value,
-        }));
-    }, []);
+        <div className={classes.content}>
+          {screen === 'start' && (
+            <StartScreen onStartNew={handleStartNew} onContinue={handleContinueSession} />
+          )}
 
-    const summaryEntries = useMemo(() => {
-        if (!completedData) {
-            return [];
-        }
+          {screen === 'personal' && (
+            <PersonalInfoStep initialValues={personalInfo} onSubmit={handlePersonalSubmit} />
+          )}
 
-        return [
-            {label: 'Age', value: completedData.personalInfo.age},
-            {label: 'Gender', value: completedData.personalInfo.gender},
-            ...nasaQuestions.map(question => ({label: question.label, value: completedData.nasaTlx[question.key]})),
-        ];
-    }, [completedData]);
+          {screen === 'experiments' && (
+            <ExperimentStep
+              experimentIndex={currentExpIndex}
+              totalExperiments={TOTAL_EXPERIMENTS}
+              scores={experimentScores[currentExpIndex]}
+              onScoreChange={handleScoreChange}
+              onNext={handleNextExperiment}
+              onBack={handleBackExperiment}
+            />
+          )}
 
-    return (
-        <Container className={classes.root}>
-            <Paper elevation={4} className={classes.paper}>
-                <div className={classes.header}>
-                    <Typography variant="h4">Questionnaire</Typography>
-                    <Typography variant="body1" color="textSecondary">
-                        Please complete the personal information section first, then answer the NASA TLX questions.
-                    </Typography>
-                    <div className={classes.stepRow}>
-                        <Chip className={classes.stepChip} color={step === 0 ? 'primary' : 'default'} label="1. Personal information" />
-                        <Chip className={classes.stepChip} color={step === 1 ? 'primary' : 'default'} label="2. NASA TLX" />
-                    </div>
-                    <LinearProgress variant="determinate" value={progressValue} />
-                </div>
-
-                {!completedData && step === 0 && (
-                    <section className={classes.section}>
-                        <Typography variant="h6">Personal information</Typography>
-                        <Typography variant="body2" color="textSecondary">
-                            Enter your age and gender before continuing.
-                        </Typography>
-                        <Grid container spacing={3} className={classes.summaryGrid}>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    className={classes.field}
-                                    label="Age"
-                                    type="number"
-                                    value={age}
-                                    onChange={event => setAge(event.target.value)}
-                                    error={personalErrors.age}
-                                    helperText={personalErrors.age ? 'Please enter a valid age between 0 and 120.' : 'Use whole years only.'}
-                                    inputProps={{min: 0, max: 120, step: 1}}
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <FormControl className={classes.field} component="fieldset" error={personalErrors.gender}>
-                                    <FormLabel component="legend">Gender</FormLabel>
-                                    <RadioGroup value={gender} onChange={event => setGender(event.target.value)}>
-                                        {genderOptions.map(option => (
-                                            <FormControlLabel
-                                                key={option.value}
-                                                value={option.value}
-                                                control={<Radio color="primary" />}
-                                                label={option.label}
-                                            />
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-
-                        <div className={classes.actions}>
-                            <div />
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={handleNext}
-                                disabled={!isPersonalStepValid}
-                            >
-                                Continue to NASA TLX
-                            </button>
-                        </div>
-                    </section>
-                )}
-
-                {!completedData && step === 1 && (
-                    <section className={classes.section}>
-                        <Typography variant="h6">NASA TLX questionnaire</Typography>
-                        <Typography variant="body2" color="textSecondary">
-                            Rate each dimension on a scale from 0 to 100.
-                        </Typography>
-
-                        <Grid container spacing={2} className={classes.summaryGrid}>
-                            {nasaQuestions.map((question, index) => (
-                                <Grid item xs={12} key={question.key}>
-                                    <div className={classes.questionCard}>
-                                        <div className={classes.questionHeader}>
-                                            <Typography variant="subtitle1">
-                                                {index + 1}. {question.label}
-                                            </Typography>
-                                            <Chip label={`${tlxScores[question.key]}`} color="primary" />
-                                        </div>
-                                        <div className={classes.sliderRow}>
-                                            <Slider
-                                                className={classes.slider}
-                                                value={tlxScores[question.key]}
-                                                onChange={(_, value) => handleScoreChange(question.key, value)}
-                                                step={5}
-                                                min={0}
-                                                max={100}
-                                                valueLabelDisplay="auto"
-                                                aria-labelledby={`${question.key}-slider`}
-                                            />
-                                        </div>
-                                        <Typography variant="caption" className={classes.helper}>
-                                            0 = very low, 100 = very high
-                                        </Typography>
-                                    </div>
-                                </Grid>
-                            ))}
-                        </Grid>
-
-                        <div className={classes.actions}>
-                            <button type="button" className="btn btn-outline-secondary" onClick={() => setStep(0)}>
-                                Back
-                            </button>
-                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>
-                                Finish questionnaire
-                            </button>
-                        </div>
-                    </section>
-                )}
-
-                {completedData && (
-                    <section className={classes.section}>
-                        <Typography variant="h6">Questionnaire completed</Typography>
-                        <Typography variant="body2" color="textSecondary">
-                            The answers are stored locally in the page state and can be reviewed below.
-                        </Typography>
-
-                        <div className={classes.summaryBox}>
-                            {summaryEntries.map(entry => (
-                                <Typography key={entry.label} variant="body1">
-                                    <strong>{entry.label}:</strong> {entry.value}
-                                </Typography>
-                            ))}
-                        </div>
-
-                        <Divider style={{margin: '1.5rem 0'}} />
-
-                        <div className={classes.actions}>
-                            <div />
-                            <button type="button" className="btn btn-primary" onClick={restart}>
-                                Start over
-                            </button>
-                        </div>
-                    </section>
-                )}
-            </Paper>
-        </Container>
-    );
+          {screen === 'summary' && (
+            <Box textAlign="center" py={4}>
+              <Typography variant="h5">{t('questionnaire.summary.title')}</Typography>
+              <Typography color="textSecondary" style={{ marginTop: '0.5rem' }}>
+                {t('questionnaire.summary.description')}
+              </Typography>
+            </Box>
+          )}
+        </div>
+      </Paper>
+    </Container>
+  );
 }

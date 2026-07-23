@@ -267,5 +267,72 @@
   "transport_new_submit": "Transport speichern",
   "transport_edit_submit": "Änderungen speichern",
   "home_patient_app_questionnaire": "Fragebogen",
-  "home_tour_questionnaire": "Um einen Fragebogen zu starten, können Sie hier klicken."
+  "home_tour_questionnaire": "Um einen Fragebogen zu starten, können Sie hier klicken.",
+  "questionnaire": {
+    "title": "NASA-TLX-Bewertung",
+    "description": "Bitte führen Sie die Bewertung der Aufgabenbelastung durch.",
+    "start": {
+      "title": "Willkommen",
+      "subtitle": "Wählen Sie aus, wie Sie fortfahren möchten.",
+      "startNew": "Neuen Fragebogen starten",
+      "continue": "Letzte Sitzung fortsetzen",
+      "noSavedWarning": "Keine aktive Sitzung gefunden. Stattdessen wird ein neuer Fragebogen gestartet."
+    },
+    "personal": {
+      "title": "Persönliche Informationen",
+      "description": "Bitte geben Sie vor Beginn grundlegende demografische Informationen an.",
+      "age": "Alter",
+      "ageError": "Bitte geben Sie ein gültiges Alter ein (0–120).",
+      "ageHelper": "Bitte nur ganze Jahre angeben.",
+      "gender": "Geschlecht",
+      "genderError": "Bitte wählen Sie eine Geschlechtsoption aus.",
+      "genders": {
+        "female": "Weiblich",
+        "male": "Männlich",
+        "non_binary": "Nicht-binär / Divers",
+        "prefer_not_to_say": "Keine Angabe"
+      },
+      "continueBtn": "Zu den Experimenten"
+    },
+    "tlx": {
+      "experimentTitle": "Experiment {{current}} von {{total}}",
+      "description": "Bewerten Sie die wahrgenommene Arbeitsbelastung für dieses Experiment.",
+      "minLabel": "0 = Sehr gering",
+      "maxLabel": "10 = Sehr hoch",
+      "back": "Zurück",
+      "nextExperiment": "Nächstes Experiment",
+      "finish": "Alle Experimente abschließen",
+      "dimensions": {
+        "mental_demand": {
+          "label": "Mentale Beanspruchung",
+          "description": "Wie viel geistige und wahrnehmungsbezogene Aktivität war erforderlich (z. B. Denken, Entscheiden, Rechnen, Erinnern, Beobachten, Suchen usw.)? War die Aufgabe leicht oder anspruchsvoll, einfach oder komplex, präzise oder nachsichtig?"
+        },
+        "physical_demand": {
+          "label": "Körperliche Beanspruchung",
+          "description": "Wie viel körperliche Aktivität war erforderlich (z. B. Schieben, Ziehen, Drehen, Steuern, Aktivieren usw.)? War die Aufgabe leicht oder anstrengend, langsam oder zügig, entspannt oder kräftezehrend?"
+        },
+        "temporal_demand": {
+          "label": "Zeitliche Beanspruchung",
+          "description": "Wie stark fühlten Sie sich durch das Tempo oder den zeitlichen Ablauf der Aufgabe unter Zeitdruck gesetzt? War das Tempo langsam und entspannt oder schnell und hektisch?"
+        },
+        "performance": {
+          "label": "Leistung",
+          "description": "Wie erfolgreich waren Sie Ihrer Meinung nach beim Erreichen der Ziele der Aufgabe? Wie zufrieden waren Sie mit Ihrer Leistung bei der Erfüllung dieser Ziele?"
+        },
+        "effort": {
+          "label": "Anstrengung",
+          "description": "Wie hart mussten Sie arbeiten (geistig und körperlich), um Ihr Leistungsniveau zu erreichen?"
+        },
+        "frustration": {
+          "label": "Frustration",
+          "description": "Wie entmutigt, gestresst, gereizt oder verärgert beziehungsweise wie zufrieden, entspannt, ausgeglichen und selbstsicher fühlten Sie sich während der Aufgabe?"
+        }
+      }
+    },
+    "summary": {
+      "title": "Bewertung abgeschlossen",
+      "description": "Vielen Dank für Ihre Teilnahme. Ihre Antworten wurden gespeichert.",
+      "restart": "Neu starten"
+    }
+  }
 }

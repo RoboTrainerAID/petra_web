@@ -267,5 +267,72 @@
   "transport_new_submit": "Enregistrer le transport",
   "transport_edit_submit": "Enregistrer les modifications",
   "home_patient_app_questionnaire": "Questionnaire",
-  "home_tour_questionnaire": "Pour commencer un questionnaire, vous pouvez cliquer ici."
+  "home_tour_questionnaire": "Pour commencer un questionnaire, vous pouvez cliquer ici.",
+  "questionnaire": {
+    "title": "Évaluation NASA TLX",
+    "description": "Veuillez compléter l'évaluation de la charge de travail de la tâche.",
+    "start": {
+      "title": "Bienvenue",
+      "subtitle": "Choisissez comment vous souhaitez continuer.",
+      "startNew": "Commencer un nouveau questionnaire",
+      "continue": "Reprendre la dernière session",
+      "noSavedWarning": "Aucune session active trouvée. Un nouveau questionnaire va être lancé."
+    },
+    "personal": {
+      "title": "Informations personnelles",
+      "description": "Veuillez fournir des informations démographiques de base avant de commencer.",
+      "age": "Âge",
+      "ageError": "Veuillez saisir un âge valide (0–120).",
+      "ageHelper": "Utilisez uniquement des années entières.",
+      "gender": "Genre",
+      "genderError": "Veuillez sélectionner une option de genre.",
+      "genders": {
+        "female": "Femme",
+        "male": "Homme",
+        "non_binary": "Non binaire / Divers",
+        "prefer_not_to_say": "Préfère ne pas répondre"
+      },
+      "continueBtn": "Passer aux expériences"
+    },
+    "tlx": {
+      "experimentTitle": "Expérience {{current}} sur {{total}}",
+      "description": "Évaluez votre charge de travail perçue pour cette expérience spécifique.",
+      "minLabel": "0 = Très faible",
+      "maxLabel": "10 = Très élevée",
+      "back": "Retour",
+      "nextExperiment": "Expérience suivante",
+      "finish": "Terminer toutes les expériences",
+      "dimensions": {
+        "mental_demand": {
+          "label": "Exigence mentale",
+          "description": "Quelle quantité d'activité mentale et perceptive était nécessaire (par exemple : réfléchir, décider, calculer, se souvenir, observer, rechercher, etc.) ? La tâche était-elle facile ou exigeante, simple ou complexe, précise ou indulgente ?"
+        },
+        "physical_demand": {
+          "label": "Exigence physique",
+          "description": "Quelle quantité d'activité physique était nécessaire (par exemple : pousser, tirer, tourner, contrôler, activer, etc.) ? La tâche était-elle facile ou exigeante, lente ou rapide, détendue ou pénible ?"
+        },
+        "temporal_demand": {
+          "label": "Exigence temporelle",
+          "description": "Dans quelle mesure avez-vous ressenti une pression liée au temps en raison du rythme auquel la tâche s'est déroulée ? Le rythme était-il lent et détendu ou rapide et frénétique ?"
+        },
+        "performance": {
+          "label": "Performance",
+          "description": "Selon vous, dans quelle mesure avez-vous réussi à atteindre les objectifs de la tâche ? Dans quelle mesure êtes-vous satisfait(e) de votre performance dans l'accomplissement de ces objectifs ?"
+        },
+        "effort": {
+          "label": "Effort",
+          "description": "À quel point avez-vous dû fournir des efforts (mentaux et physiques) pour atteindre votre niveau de performance ?"
+        },
+        "frustration": {
+          "label": "Frustration",
+          "description": "Dans quelle mesure vous êtes-vous senti(e) découragé(e), stressé(e), irrité(e) ou agacé(e), par opposition à satisfait(e), détendu(e), serein(e) et confiant(e), pendant la tâche ?"
+        }
+      }
+    },
+    "summary": {
+      "title": "Évaluation terminée",
+      "description": "Merci de votre participation. Vos réponses ont été enregistrées.",
+      "restart": "Recommencer"
+    }
+  }
 }

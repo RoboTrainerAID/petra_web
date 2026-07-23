@@ -267,5 +267,72 @@
   "transport_new_submit": "Spremi transport",
   "transport_edit_submit": "Spremi promjene",
   "home_patient_app_questionnaire": "Upitnik",
-  "home_tour_questionnaire": "Za početak ispunjavanja upitnika možete kliknuti ovdje."
+  "home_tour_questionnaire": "Za početak ispunjavanja upitnika možete kliknuti ovdje.",
+  "questionnaire": {
+    "title": "NASA TLX Procjena",
+    "description": "Molimo ispunite procjenu radnog opterećenja zadatka.",
+    "start": {
+      "title": "Dobrodošli",
+      "subtitle": "Odaberite kako želite nastaviti.",
+      "startNew": "Pokreni novi upitnik",
+      "continue": "Nastavi posljednju sesiju",
+      "noSavedWarning": "Nije pronađena aktivna sesija. Umjesto toga pokreće se novi upitnik."
+    },
+    "personal": {
+      "title": "Osobni podaci",
+      "description": "Molimo unesite osnovne demografske podatke prije početka.",
+      "age": "Dob",
+      "ageError": "Molimo unesite valjanu dob (0–120).",
+      "ageHelper": "Unesite samo cijele godine.",
+      "gender": "Spol",
+      "genderError": "Molimo odaberite opciju spola.",
+      "genders": {
+        "female": "Žensko",
+        "male": "Muško",
+        "non_binary": "Nebinarno / Drugo",
+        "prefer_not_to_say": "Ne želim navesti"
+      },
+      "continueBtn": "Nastavi na eksperimente"
+    },
+    "tlx": {
+      "experimentTitle": "Eksperiment {{current}} od {{total}}",
+      "description": "Ocijenite svoje percipirano radno opterećenje za ovaj eksperiment.",
+      "minLabel": "0 = Vrlo nisko",
+      "maxLabel": "10 = Vrlo visoko",
+      "back": "Natrag",
+      "nextExperiment": "Sljedeći eksperiment",
+      "finish": "Završi sve eksperimente",
+      "dimensions": {
+        "mental_demand": {
+          "label": "Mentalni zahtjev",
+          "description": "Koliko je mentalne i perceptivne aktivnosti bilo potrebno (npr. razmišljanje, odlučivanje, računanje, pamćenje, promatranje, traženje itd.)? Je li zadatak bio lagan ili zahtjevan, jednostavan ili složen, precizan ili opraštajući?"
+        },
+        "physical_demand": {
+          "label": "Fizički zahtjev",
+          "description": "Koliko je fizičke aktivnosti bilo potrebno (npr. guranje, povlačenje, okretanje, upravljanje, aktiviranje itd.)? Je li zadatak bio lagan ili zahtjevan, spor ili brz, opušten ili naporan?"
+        },
+        "temporal_demand": {
+          "label": "Vremenski zahtjev",
+          "description": "Koliki ste vremenski pritisak osjećali zbog brzine ili tempa kojim se zadatak odvijao? Je li tempo bio spor i opušten ili brz i užurban?"
+        },
+        "performance": {
+          "label": "Uspješnost",
+          "description": "Koliko ste uspješno, prema vlastitom mišljenju, ostvarili ciljeve zadatka? Koliko ste bili zadovoljni svojom uspješnošću u ostvarivanju tih ciljeva?"
+        },
+        "effort": {
+          "label": "Ulaganje napora",
+          "description": "Koliko ste se morali truditi (mentalno i fizički) kako biste postigli svoju razinu uspješnosti?"
+        },
+        "frustration": {
+          "label": "Frustracija",
+          "description": "Koliko ste se tijekom zadatka osjećali obeshrabreno, pod stresom, razdraženo i iznervirano nasuprot zadovoljno, opušteno, smireno i samouvjereno?"
+        }
+      }
+    },
+    "summary": {
+      "title": "Procjena završena",
+      "description": "Hvala na sudjelovanju. Vaši odgovori su zabilježeni.",
+      "restart": "Pokreni ponovno"
+    }
+  }
 }

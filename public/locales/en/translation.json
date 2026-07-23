@@ -68,7 +68,7 @@
   "translation_text_german": "German",
   "translation_text_english": "English",
   "translation_text_french": "French",
-  "translation_text_croatian": "Craotian",
+  "translation_text_croatian": "Croatian",
   "translation_text_ukrainian": "Ukrainian",
   "translation_text_turkish": "Turkish",
   "translation_button_translate": "Translate",
@@ -267,5 +267,72 @@
   "transport_new_submit": "Save transport",
   "transport_edit_submit": "Save changes",
   "home_patient_app_questionnaire": "Questionnaire",
-  "home_tour_questionnaire": "To start a questionnaire, you can click here."
+  "home_tour_questionnaire": "To start a questionnaire, you can click here.",
+  "questionnaire": {
+    "title": "NASA TLX Assessment",
+    "description": "Please complete the task workload evaluation.",
+    "start": {
+      "title": "Welcome",
+      "subtitle": "Choose how you would like to proceed.",
+      "startNew": "Start New Questionnaire",
+      "continue": "Continue Last Session",
+      "noSavedWarning": "No active session found. Starting a new questionnaire instead."
+    },
+    "personal": {
+      "title": "Personal Information",
+      "description": "Please provide basic demographic information before starting.",
+      "age": "Age",
+      "ageError": "Please enter a valid age (0–120).",
+      "ageHelper": "Use whole years only.",
+      "gender": "Gender",
+      "genderError": "Please select a gender option.",
+      "genders": {
+        "female": "Female",
+        "male": "Male",
+        "non_binary": "Non-binary / Diverse",
+        "prefer_not_to_say": "Prefer not to say"
+      },
+      "continueBtn": "Proceed to Experiments"
+    },
+    "tlx": {
+      "experimentTitle": "Experiment {{current}} of {{total}}",
+      "description": "Rate your perceived workload for this specific experiment.",
+      "minLabel": "0 = Very Low",
+      "maxLabel": "10 = Very High",
+      "back": "Back",
+      "nextExperiment": "Next Experiment",
+      "finish": "Complete All Experiments",
+      "dimensions": {
+        "mental_demand": {
+          "label": "Mental Demand",
+          "description": "How much mental and perceptual activity was required (e.g., thinking, deciding, calculating, remembering, looking, searching, etc)? Was the mission easy or demanding, simple or complex, exacting or forgiving?"
+        },
+        "physical_demand": {
+          "label": "Physical Demand",
+          "description": "How much physical activity was required (e.g., pushing, pulling, turning, controlling, activating, etc.)? Was the mission easy or demanding, slow or brisk, slack or strenuous, restful or laborious?"
+        },
+        "temporal_demand": {
+          "label": "Temporal Demand",
+          "description": "How much time pressure did you feel due to the rate or pace at which the mission occurred? Was the pace slow and leisurely or rapid and frantic?"
+        },
+        "performance": {
+          "label": "Performance",
+          "description": "How successful do you think you were in accomplishing the goals of the mission? How satisfied were you with your performance in accomplishing these goals?"
+        },
+        "effort": {
+          "label": "Effort",
+          "description": "How hard did you have to work (mentally and physically) to accomplish your level of performance?"
+        },
+        "frustration": {
+          "label": "Frustration",
+          "description": "How discouraged, stressed, irritated, and annoyed versus gratified, relaxed, content, and complacent did you feel during your mission?"
+        }
+      }
+    },
+    "summary": {
+      "title": "Assessment Completed",
+      "description": "Thank you for participating. Your responses have been recorded.",
+      "restart": "Start Over"
+    }
+  }
 }

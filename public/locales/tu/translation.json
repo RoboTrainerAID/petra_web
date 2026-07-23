@@ -267,5 +267,72 @@
   "transport_new_submit": "Taşımayı kaydet",
   "transport_edit_submit": "Değişiklikleri kaydet",
   "home_patient_app_questionnaire": "Anket",
-  "home_tour_questionnaire": "Anketi başlatmak için buraya tıklayın."
+  "home_tour_questionnaire": "Anketi başlatmak için buraya tıklayın.",
+  "questionnaire": {
+    "title": "NASA TLX Değerlendirmesi",
+    "description": "Lütfen görev iş yükü değerlendirmesini tamamlayın.",
+    "start": {
+      "title": "Hoş Geldiniz",
+      "subtitle": "Nasıl devam etmek istediğinizi seçin.",
+      "startNew": "Yeni Anket Başlat",
+      "continue": "Son Oturuma Devam Et",
+      "noSavedWarning": "Etkin bir oturum bulunamadı. Bunun yerine yeni bir anket başlatılıyor."
+    },
+    "personal": {
+      "title": "Kişisel Bilgiler",
+      "description": "Başlamadan önce lütfen temel demografik bilgilerinizi girin.",
+      "age": "Yaş",
+      "ageError": "Lütfen geçerli bir yaş girin (0–120).",
+      "ageHelper": "Yalnızca tam yıl olarak girin.",
+      "gender": "Cinsiyet",
+      "genderError": "Lütfen bir cinsiyet seçeneği belirleyin.",
+      "genders": {
+        "female": "Kadın",
+        "male": "Erkek",
+        "non_binary": "İkili cinsiyet dışında / Çeşitli",
+        "prefer_not_to_say": "Belirtmek istemiyorum"
+      },
+      "continueBtn": "Deneylere Geç"
+    },
+    "tlx": {
+      "experimentTitle": "{{total}} deneyden {{current}}. deney",
+      "description": "Bu deney için algıladığınız iş yükünü değerlendirin.",
+      "minLabel": "0 = Çok Düşük",
+      "maxLabel": "10 = Çok Yüksek",
+      "back": "Geri",
+      "nextExperiment": "Sonraki Deney",
+      "finish": "Tüm Deneyleri Tamamla",
+      "dimensions": {
+        "mental_demand": {
+          "label": "Zihinsel Yük",
+          "description": "Ne kadar zihinsel ve algısal faaliyet gerekiyordu (ör. düşünme, karar verme, hesaplama, hatırlama, gözlemleme, arama vb.)? Görev kolay mıydı yoksa zorlayıcı mıydı; basit mi yoksa karmaşık mıydı; hassas mı yoksa hoşgörülü müydü?"
+        },
+        "physical_demand": {
+          "label": "Fiziksel Yük",
+          "description": "Ne kadar fiziksel faaliyet gerekiyordu (ör. itme, çekme, döndürme, kontrol etme, etkinleştirme vb.)? Görev kolay mıydı yoksa zorlayıcı mıydı; yavaş mıydı yoksa hızlı mıydı; rahat mıydı yoksa yorucu muydu?"
+        },
+        "temporal_demand": {
+          "label": "Zamansal Yük",
+          "description": "Görevin gerçekleşme hızı veya temposu nedeniyle ne kadar zaman baskısı hissettiniz? Tempo yavaş ve rahat mıydı yoksa hızlı ve yoğun muydu?"
+        },
+        "performance": {
+          "label": "Performans",
+          "description": "Görevin hedeflerine ulaşmada ne kadar başarılı olduğunuzu düşünüyorsunuz? Bu hedeflere ulaşmadaki performansınızdan ne kadar memnun kaldınız?"
+        },
+        "effort": {
+          "label": "Çaba",
+          "description": "Performans düzeyinize ulaşmak için (zihinsel ve fiziksel olarak) ne kadar çaba harcamanız gerekti?"
+        },
+        "frustration": {
+          "label": "Hayal Kırıklığı",
+          "description": "Görev sırasında kendinizi ne kadar cesareti kırılmış, stresli, sinirli ve rahatsız hissettiniz; buna karşılık ne kadar memnun, rahat, huzurlu ve kendinden emin hissettiniz?"
+        }
+      }
+    },
+    "summary": {
+      "title": "Değerlendirme Tamamlandı",
+      "description": "Katılımınız için teşekkür ederiz. Yanıtlarınız kaydedildi.",
+      "restart": "Baştan Başla"
+    }
+  }
 }
