@@ -10,6 +10,7 @@ import {
   Button,
   Paper,
   Box,
+  makeStyles,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,64 @@ const NASA_KEYS = [
 
 const RATING_OPTIONS = Array.from({ length: 10 }, (_, i) => i + 1);
 
+const useStyles = makeStyles((theme) => ({
+  questionCard: {
+    padding: theme.spacing(3),
+    borderRadius: '16px',
+    marginBottom: theme.spacing(1),
+  },
+  questionTitle: {
+    fontSize: '1.5rem',
+    fontWeight: 800,
+  },
+  questionDescription: {
+    fontSize: '1.2rem',
+    margin: '12px 0 20px 0',
+    color: '#333',
+    lineHeight: 1.4,
+  },
+  chipLarge: {
+    fontSize: '1.3rem',
+    height: '40px',
+    minWidth: '50px',
+    fontWeight: 800,
+  },
+  ratingBox: {
+    border: '2px solid #ccc',
+    borderRadius: '10px',
+    padding: '8px 4px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: '56px',
+    flex: 1,
+    cursor: 'pointer',
+  },
+  ratingBoxSelected: {
+    border: '3px solid #1976d2',
+    backgroundColor: '#e3f2fd',
+  },
+  ratingText: {
+    fontSize: '1.35rem',
+    fontWeight: 800,
+    marginTop: '2px',
+  },
+  scaleLabel: {
+    fontSize: '1.15rem',
+    fontWeight: 700,
+    color: '#555',
+  },
+  actionButton: {
+    fontSize: '1.35rem',
+    fontWeight: 800,
+    height: '60px',
+    padding: '0 36px',
+    borderRadius: '12px',
+    textTransform: 'none',
+  },
+}));
+
 export default function ExperimentStep({
   experimentIndex,
   totalExperiments,
@@ -33,11 +92,11 @@ export default function ExperimentStep({
   onNext,
   onBack,
 }) {
+  const classes = useStyles();
   const { t } = useTranslation();
   const [showError, setShowError] = useState(false);
   const isLastExperiment = experimentIndex === totalExperiments - 1;
 
-  // Check if every NASA TLX key has a valid value between 1 and 10
   const isAllAnswered = NASA_KEYS.every(
     (key) => typeof scores[key] === 'number' && scores[key] >= 1 && scores[key] <= 10
   );
@@ -52,58 +111,52 @@ export default function ExperimentStep({
   };
 
   const handleRadioChange = (key, value) => {
-    setShowError(false); // Clear error message when user makes a selection
+    setShowError(false);
     onScoreChange(key, value);
   };
 
   return (
-    <Box display="flex" flexDirection="column" gap={2} pb={2}>
-      <Typography variant="h6">
+    <Box display="flex" flexDirection="column" gap={3} pb={2}>
+      <Typography variant="h4" style={{ fontWeight: 800 }}>
         {t('questionnaire.tlx.experimentTitle', {
           current: experimentIndex + 1,
           total: totalExperiments,
         })}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
+      <Typography style={{ fontSize: '1.25rem' }} color="textSecondary">
         {t('questionnaire.tlx.description')}
       </Typography>
 
       {showError && (
-        <Alert severity="error">
+        <Alert severity="error" style={{ fontSize: '1.2rem', borderRadius: '10px' }}>
           {t('questionnaire.tlx.validationError', 'Please answer all questions before proceeding.')}
         </Alert>
       )}
 
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {NASA_KEYS.map((key, index) => {
           const hasScore = typeof scores[key] === 'number' && scores[key] >= 1;
 
           return (
             <Grid item xs={12} key={key}>
               <Paper
-                elevation={1}
+                elevation={2}
+                className={classes.questionCard}
                 style={{
-                  padding: '1rem',
-                  borderRadius: '8px',
-                  border: showError && !hasScore ? '1px solid #f44336' : '1px solid transparent',
+                  border: showError && !hasScore ? '3px solid #f44336' : '1px solid #d0d0d0',
                 }}
               >
-                <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                  <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Typography className={classes.questionTitle}>
                     {index + 1}. {t(`questionnaire.tlx.dimensions.${key}.label`)}
                   </Typography>
                   <Chip
+                    className={classes.chipLarge}
                     label={hasScore ? scores[key] : '-'}
                     color={hasScore ? 'primary' : 'default'}
-                    size="small"
                   />
                 </Box>
-                <Typography
-                  variant="caption"
-                  color="textSecondary"
-                  display="block"
-                  style={{ marginBottom: '0.75rem' }}
-                >
+                <Typography className={classes.questionDescription}>
                   {t(`questionnaire.tlx.dimensions.${key}.description`)}
                 </Typography>
 
@@ -115,29 +168,38 @@ export default function ExperimentStep({
                     value={scores[key] || ''}
                     onChange={(e) => handleRadioChange(key, Number(e.target.value))}
                     style={{
+                      display: 'flex',
                       justifyContent: 'space-between',
-                      flexWrap: 'wrap',
-                      rowGap: '0.5rem',
+                      gap: '8px',
+                      flexWrap: 'nowrap',
                     }}
                   >
-                    {RATING_OPTIONS.map((val) => (
-                      <FormControlLabel
-                        key={val}
-                        value={val}
-                        control={<Radio color="primary" size="small" />}
-                        label={val.toString()}
-                        labelPlacement="top"
-                        style={{ margin: 0 }}
-                      />
-                    ))}
+                    {RATING_OPTIONS.map((val) => {
+                      const isSelected = scores[key] === val;
+                      return (
+                        <Box
+                          key={val}
+                          className={`${classes.ratingBox} ${isSelected ? classes.ratingBoxSelected : ''}`}
+                          onClick={() => handleRadioChange(key, val)}
+                        >
+                          <Typography className={classes.ratingText}>{val}</Typography>
+                          <Radio
+                            checked={isSelected}
+                            color="primary"
+                            size="small"
+                            style={{ padding: '2px' }}
+                          />
+                        </Box>
+                      );
+                    })}
                   </RadioGroup>
                 </FormControl>
 
-                <Box display="flex" justifyContent="space-between" mt={1}>
-                  <Typography variant="caption" color="textSecondary">
+                <Box display="flex" justifyContent="space-between" mt={2}>
+                  <Typography className={classes.scaleLabel}>
                     {t('questionnaire.tlx.minLabel')}
                   </Typography>
-                  <Typography variant="caption" color="textSecondary">
+                  <Typography className={classes.scaleLabel}>
                     {t('questionnaire.tlx.maxLabel')}
                   </Typography>
                 </Box>
@@ -147,13 +209,15 @@ export default function ExperimentStep({
         })}
       </Grid>
 
-      <Box display="flex" justifyContent="space-between" mt={3}>
-        <Button variant="outlined" onClick={onBack}>
+      {/* Bottom Actions */}
+      <Box display="flex" justifyContent="space-between" mt={4}>
+        <Button variant="outlined" className={classes.actionButton} onClick={onBack}>
           {t('questionnaire.tlx.back')}
         </Button>
         <Button
           variant="contained"
           color="primary"
+          className={classes.actionButton}
           onClick={handleNextClick}
           disabled={!isAllAnswered}
         >
