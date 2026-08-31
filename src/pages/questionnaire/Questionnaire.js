@@ -1,31 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Paper, Typography, LinearProgress, Chip, Box, makeStyles } from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Paper, Typography, Chip, Box, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import StartScreen from './StartScreen';
 import PersonalInfoStep from './PersonalInfoStep';
 import ExperimentStep from './ExperimentStep';
+import TaskDifficultyStep from './TaskDifficultyStep';
+import WaitingScreen from './WaitingScreen';
+import DemographicsStep from './DemographicsStep';
+import PairwiseComparisonStep from './PairwiseComparisonStep';
+import IFISStep from './IFISStep';
+import SusStep from './SUSStep';
+import ClinicalScalesStep from './ClinicalScalesStep';
+import { FLASK_BACKEND_URL } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3, 0),
-  },
-  paper: {
-    padding: theme.spacing(3),
-    height: '75vh',             // Constrain height so inner container can scroll
-    maxHeight: '800px',
+  outerContainer: {
+    padding: `${theme.spacing(2)}px !important`,
+    maxWidth: 'none !important',
+    width: '100%',
+    height: '100%',
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
+    overflow: 'hidden',
+  },
+  paper: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing(3),
+    borderRadius: '16px',
+    boxSizing: 'border-box',
+    overflow: 'hidden',
   },
   header: {
-    flexShrink: 0,              // Keep header fixed at top
+    flexShrink: 0,
     marginBottom: theme.spacing(2),
   },
+  title: {
+    fontSize: '2.2rem',
+    fontWeight: 800,
+    color: '#000',
+  },
   content: {
-    flex: 1,                    // Occupy remaining height
-    overflowY: 'auto',          // Enable vertical scrolling
-    minHeight: 0,               // Allow flex item to shrink below content size
-    paddingRight: theme.spacing(1), // Prevents scrollbar from touching text
+    flex: 1,
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    minHeight: 0,
+    paddingRight: theme.spacing(1),
+    '& .MuiGrid-container': {
+      width: '100%',
+      margin: 0,
+    },
   },
 }));
 
@@ -36,133 +64,264 @@ const INITIAL_TLX = {
   performance: null,
   effort: null,
   frustration: null,
+  task_difficulty: null, // Extra field saved alongside standard NASA-TLX
 };
-
-// Configure total experiments needed for your study
-const TOTAL_EXPERIMENTS = 3;
 
 export default function QuestionnaireContainer() {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  // Mode: 'start' | 'personal' | 'experiments' | 'summary'
+  // Mode: 'start' | 'personal' | 'waiting' | 'experiments' | 'task_difficulty' | 'pairwise' | 'demographics' | 'ifis' | 'sus' | 'summary'
   const [screen, setScreen] = useState('start');
   const [personalInfo, setPersonalInfo] = useState(null);
-  const [currentExpIndex, setCurrentExpIndex] = useState(0);
+  const [participantDbId, setParticipantDbId] = useState(null);
+  const [hasExtraStep, setHasExtraStep] = useState(false);
   
-  // Array holding scores for each experiment iteration
-  const [experimentScores, setExperimentScores] = useState(
-    Array.from({ length: TOTAL_EXPERIMENTS }, () => ({ ...INITIAL_TLX }))
-  );
+  // Experiment Dynamic State
+  const [currentExpId, setCurrentExpId] = useState(null);
+  const [expCount, setExpCount] = useState(1);
+  const [scores, setScores] = useState({ ...INITIAL_TLX });
 
-  // Auto-save state changes locally
+  const pollingTimerRef = useRef(null);
+
   useEffect(() => {
-    if (screen !== 'start') {
-      const sessionData = { screen, personalInfo, currentExpIndex, experimentScores };
-      localStorage.setItem('nasa_tlx_session', JSON.stringify(sessionData));
-    }
-  }, [screen, personalInfo, currentExpIndex, experimentScores]);
+    return () => {
+      if (pollingTimerRef.current) clearInterval(pollingTimerRef.current);
+    };
+  }, []);
+
+  const startPollingForNextExperiment = (partId) => {
+    setScreen('waiting');
+
+    pollingTimerRef.current = setInterval(async () => {
+      try {
+        const response = await fetch(`${FLASK_BACKEND_URL}/participants/${partId}/next-experiment`);
+        const data = await response.json();
+
+        if (data.status === 'ready') {
+          clearInterval(pollingTimerRef.current);
+          setCurrentExpId(data.experiment_id);
+          setExpCount(data.experiment_number || expCount);
+          setHasExtraStep(!!data.extra_step); 
+          setScores({ ...INITIAL_TLX });
+          setScreen('experiments');
+        } else if (data.status === 'waiting') {
+          if (data.next_experiment_number) {
+            setExpCount(data.next_experiment_number);
+          }
+        } 
+        else if (data.status === 'finished') {
+          clearInterval(pollingTimerRef.current);
+          setScreen('pairwise');
+        }
+      } catch (err) {
+        console.error("Error polling backend:", err);
+      }
+    }, 3000);
+  };
 
   const handleStartNew = () => {
     localStorage.removeItem('nasa_tlx_session');
     setPersonalInfo(null);
-    setCurrentExpIndex(0);
-    setExperimentScores(Array.from({ length: TOTAL_EXPERIMENTS }, () => ({ ...INITIAL_TLX })));
+    setParticipantDbId(null);
+    setCurrentExpId(null);
+    setExpCount(1);
+    setScores({ ...INITIAL_TLX });
     setScreen('personal');
   };
 
-  const handleContinueSession = (savedData) => {
-    setPersonalInfo(savedData.personalInfo);
-    setCurrentExpIndex(savedData.currentExpIndex ?? 0);
-    setExperimentScores(savedData.experimentScores ?? Array.from({ length: TOTAL_EXPERIMENTS }, () => ({ ...INITIAL_TLX })));
-    setScreen(savedData.screen || 'personal');
-  };
-
-  const handlePersonalSubmit = (data) => {
+  const handlePersonalSubmit = async (data) => {
     setPersonalInfo(data);
-    setScreen('experiments');
-  };
-
-  const handleScoreChange = (key, value) => {
-    setExperimentScores((prev) => {
-      const updated = [...prev];
-      updated[currentExpIndex] = { ...updated[currentExpIndex], [key]: value };
-      return updated;
-    });
-  };
-
-  const handleNextExperiment = () => {
-    if (currentExpIndex < TOTAL_EXPERIMENTS - 1) {
-      setCurrentExpIndex((prev) => prev + 1);
-    } else {
-      setScreen('summary');
-      localStorage.removeItem('nasa_tlx_session'); // Clear session upon complete finish
+    try {
+      const res = await fetch(`${FLASK_BACKEND_URL}/participants`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const resData = await res.json();
+      setParticipantDbId(resData.participant_db_id);
+      
+      setScreen('clinical');
+    } catch (err) {
+      console.error("Failed to save personal info:", err);
     }
   };
 
-  const handleBackExperiment = () => {
-    if (currentExpIndex > 0) {
-      setCurrentExpIndex((prev) => prev - 1);
+  const handleClinicalScalesSubmit = async (clinicalData) => {
+    try {
+      await fetch(`${FLASK_BACKEND_URL}/participants/${participantDbId}/clinical-scales`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(clinicalData),
+      });
+
+      // Start experiment polling after saving clinical scale data
+      startPollingForNextExperiment(participantDbId);
+    } catch (err) {
+      console.error("Failed to save clinical scales:", err);
+    }
+  };
+
+  const handleScoreChange = (key, value) => {
+    setScores((prev) => ({ ...prev, [key]: value }));
+  };
+
+  // Triggered after finishing NASA-TLX rating screen
+  const handleExperimentStepNext = () => {
+    if (hasExtraStep) {
+      setScreen('task_difficulty');
     } else {
-      setScreen('personal');
+      submitAllScores(scores);
+    }
+  };
+
+  // Triggered after finishing Task Difficulty screen
+  const handleDifficultySubmit = (difficultyRating) => {
+    const updatedScores = { ...scores, task_difficulty: difficultyRating };
+    setScores(updatedScores);
+    submitAllScores(updatedScores);
+  };
+
+  // Sends combined NASA-TLX + task_difficulty object to backend in a single API call
+  const submitAllScores = async (payloadScores) => {
+    try {
+      await fetch(`${FLASK_BACKEND_URL}/experiments/${currentExpId}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scores: payloadScores }),
+      });
+
+      startPollingForNextExperiment(participantDbId);
+    } catch (err) {
+      console.error("Failed to submit experiment answers:", err);
+    }
+  };
+
+  const handleWeightsSubmit = async (calculatedWeights) => {
+    try {
+      await fetch(`${FLASK_BACKEND_URL}/participants/${participantDbId}/weights`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ weights: calculatedWeights }),
+      });
+      setScreen('demographics');
+    } catch (err) {
+      console.error("Failed to submit weights:", err);
+    }
+  };
+
+  const handleDemographicsSubmit = async (demographicData) => {
+    try {
+      await fetch(`${FLASK_BACKEND_URL}/participants/${participantDbId}/demographics`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(demographicData),
+      });
+      setScreen('ifis');
+    } catch (err) {
+      console.error("Failed to save demographics:", err);
+    }
+  };
+
+  const handleIFISSubmit = async (ifisAnswers) => {
+    try {
+      await fetch(`${FLASK_BACKEND_URL}/participants/${participantDbId}/ifis`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ifis: ifisAnswers }),
+      });
+      setScreen('sus');
+    } catch (err) {
+      console.error("Failed to save IFIS scores:", err);
+    }
+  };
+
+  const handleSusSubmit = async (susAnswers) => {
+    try {
+      await fetch(`${FLASK_BACKEND_URL}/participants/${participantDbId}/sus`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(susAnswers),
+      });
+      setScreen('summary');
+    } catch (err) {
+      console.error("Failed to save SUS responses:", err);
     }
   };
 
   return (
-    <Container maxWidth="md" className={classes.root}>
+    <Container disableGutters className={classes.outerContainer}>
       <Paper elevation={3} className={classes.paper}>
         <div className={classes.header}>
-          <Typography variant="h4">{t('questionnaire.title')}</Typography>
-          <Typography color="textSecondary">{t('questionnaire.description')}</Typography>
-
-          {screen !== 'start' && screen !== 'summary' && (
-            <Box mt={2}>
-              <Box display="flex" gap={1} mb={1}>
-                <Chip
-                  label={t('questionnaire.personal.title')}
-                  color={screen === 'personal' ? 'primary' : 'default'}
-                />
-                <Chip
-                  label={t('questionnaire.tlx.experimentTitle', {
-                    current: currentExpIndex + 1,
-                    total: TOTAL_EXPERIMENTS,
-                  })}
-                  color={screen === 'experiments' ? 'primary' : 'default'}
-                />
-              </Box>
-              <LinearProgress
-                variant="determinate"
-                value={screen === 'personal' ? 20 : 20 + ((currentExpIndex + 1) / TOTAL_EXPERIMENTS) * 80}
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            {(screen === 'experiments' || screen === 'task_difficulty') && (
+              <Chip
+                label={`Experiment #${expCount}`}
+                color="primary"
+                style={{ fontSize: '1.2rem', height: '44px', fontWeight: 700 }}
               />
-            </Box>
-          )}
+            )}
+          </Box>
         </div>
 
         <div className={classes.content}>
           {screen === 'start' && (
-            <StartScreen onStartNew={handleStartNew} onContinue={handleContinueSession} />
+            <StartScreen onStartNew={handleStartNew} onContinue={() => {}} />
           )}
 
           {screen === 'personal' && (
             <PersonalInfoStep initialValues={personalInfo} onSubmit={handlePersonalSubmit} />
           )}
 
+          {screen === 'clinical' && (
+            <ClinicalScalesStep onSubmit={handleClinicalScalesSubmit} />
+          )}
+
+          {screen === 'waiting' && (
+            <WaitingScreen experimentNumber={expCount} />
+          )}
+
           {screen === 'experiments' && (
             <ExperimentStep
-              experimentIndex={currentExpIndex}
-              totalExperiments={TOTAL_EXPERIMENTS}
-              scores={experimentScores[currentExpIndex]}
+              experimentIndex={expCount - 1}
+              totalExperiments={expCount}
+              scores={scores}
               onScoreChange={handleScoreChange}
-              onNext={handleNextExperiment}
-              onBack={handleBackExperiment}
+              onNext={handleExperimentStepNext}
+              onBack={() => {}}
             />
           )}
 
+          {screen === 'task_difficulty' && (
+            <TaskDifficultyStep
+              initialValue={scores.task_difficulty}
+              onSubmit={handleDifficultySubmit}
+            />
+          )}
+
+          {screen === 'demographics' && (
+            <DemographicsStep onSubmit={handleDemographicsSubmit} />
+          )}
+
+          {screen === 'pairwise' && (
+            <PairwiseComparisonStep onSubmitWeights={handleWeightsSubmit} />
+          )}
+
+          {screen === 'ifis' && (
+            <IFISStep onSubmitIFIS={handleIFISSubmit} />
+          )}
+
+          {screen === 'sus' && (
+            <SusStep onSubmitSus={handleSusSubmit} />
+          )}
+
           {screen === 'summary' && (
-            <Box textAlign="center" py={4}>
-              <Typography variant="h5">{t('questionnaire.summary.title')}</Typography>
-              <Typography color="textSecondary" style={{ marginTop: '0.5rem' }}>
-                {t('questionnaire.summary.description')}
+            <Box textAlign="center" py={6}>
+              <Typography variant="h3" style={{ fontWeight: 800 }}>
+                {t('questionnaire.summary.title', 'Thank You!')}
+              </Typography>
+              <Typography style={{ fontSize: '1.4rem', marginTop: '1rem', color: '#444' }}>
+                {t('questionnaire.summary.description', 'All experiments have been completed and your responses have been saved.')}
               </Typography>
             </Box>
           )}

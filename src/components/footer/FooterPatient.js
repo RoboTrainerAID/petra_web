@@ -102,29 +102,42 @@ export default function FooterPatient({ triggerEmergency, showEmergencyButton, t
     let {pathname} = useLocation();
 
     if (pathname !== '/' && pathname !== '/navigation' && pathname !== '/questionnaire' && pathname !== '/translation' && pathname !== '/entertainment' && pathname !== '/entertainment/media' && pathname !== '/entertainment/news' && pathname !== '/entertainment/games') return null;
+    
+    const isQuestionnaire = pathname.startsWith('/questionnaire');
 
     return (
         <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="back button">
-                    <BackButtonThatHides/>
-                </IconButton>
-                <Fab aria-label="volume up" className={[classes.vdownButton, "step3"]}>
-                    <VolumeDownIcon className={classes.soundIcon}/>
-                </Fab>
-                <Fab aria-label="volume down" className={classes.vupButton}>
-                    <VolumeUpIcon className={classes.soundIcon}/>
-                </Fab>
-                <Fab aria-label="voice input" className={[classes.talkButton, "step2"]}>
-                    <MicIcon className={classes.soundIcon}/>
-                </Fab>
-                <div className={classes.grow}/>
-                {showEmergencyButton && <IconButton className="step4">
-                    <EmergencyButton triggerEmergency={triggerEmergency}/>
-                </IconButton>}
-                {!isFullscreen && <IconButton onClick={toggleFullscreen}>
-                    <Fullscreen className={classes.fullscreenButton}/>
-                </IconButton>}
+                {!isQuestionnaire && (
+                    <>
+                        <IconButton edge="start" color="inherit" aria-label="back button">
+                            <BackButtonThatHides />
+                        </IconButton>
+                        <Fab aria-label="volume up" className={[classes.vdownButton, "step3"]}>
+                            <VolumeDownIcon className={classes.soundIcon} />
+                        </Fab>
+                        <Fab aria-label="volume down" className={classes.vupButton}>
+                            <VolumeUpIcon className={classes.soundIcon} />
+                        </Fab>
+                        <Fab aria-label="voice input" className={[classes.talkButton, "step2"]}>
+                            <MicIcon className={classes.soundIcon} />
+                        </Fab>
+                    </>
+                )}
+
+                <div className={classes.grow} />
+
+                {showEmergencyButton && (
+                    <IconButton className="step4">
+                        <EmergencyButton triggerEmergency={triggerEmergency} />
+                    </IconButton>
+                )}
+
+                {!isFullscreen && (
+                    <IconButton onClick={toggleFullscreen}>
+                        <Fullscreen className={classes.fullscreenButton} />
+                    </IconButton>
+                )}
             </Toolbar>
         </AppBar>
     );

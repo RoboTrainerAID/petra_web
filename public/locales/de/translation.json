@@ -298,34 +298,34 @@
       "experimentTitle": "Experiment {{current}} von {{total}}",
       "description": "Bewerten Sie die wahrgenommene Arbeitsbelastung für dieses Experiment.",
       "minLabel": "0 = Sehr gering",
-      "maxLabel": "10 = Sehr hoch",
+      "maxLabel": "100 = Sehr hoch",
       "back": "Zurück",
       "nextExperiment": "Nächstes Experiment",
       "finish": "Alle Experimente abschließen",
       "dimensions": {
         "mental_demand": {
-          "label": "Mentale Beanspruchung",
-          "description": "Wie viel geistige und wahrnehmungsbezogene Aktivität war erforderlich (z. B. Denken, Entscheiden, Rechnen, Erinnern, Beobachten, Suchen usw.)? War die Aufgabe leicht oder anspruchsvoll, einfach oder komplex, präzise oder nachsichtig?"
+          "label": "Mentale Anforderung",
+          "description": "Wie viel mentale Anstrengung war bei der Aufgabe erforderlich (z.B. Denken, Entscheiden, Rechnen, Erinnern, Hinsehen, Suchen...)?"
         },
         "physical_demand": {
-          "label": "Körperliche Beanspruchung",
-          "description": "Wie viel körperliche Aktivität war erforderlich (z. B. Schieben, Ziehen, Drehen, Steuern, Aktivieren usw.)? War die Aufgabe leicht oder anstrengend, langsam oder zügig, entspannt oder kräftezehrend?"
+          "label": "Körperliche Anforderung",
+          "description": "Wie viel körperliche Aktivität war erforderlich (z.B. Ziehen, Drücken, Drehen, Steuern, Aktivieren, …)?"
         },
         "temporal_demand": {
-          "label": "Zeitliche Beanspruchung",
-          "description": "Wie stark fühlten Sie sich durch das Tempo oder den zeitlichen Ablauf der Aufgabe unter Zeitdruck gesetzt? War das Tempo langsam und entspannt oder schnell und hektisch?"
+          "label": "Zeitliche Anforderung",
+          "description": "Wie viel Zeitdruck empfanden Sie beim absolvieren der Aufgabe?"
         },
         "performance": {
-          "label": "Leistung",
-          "description": "Wie erfolgreich waren Sie Ihrer Meinung nach beim Erreichen der Ziele der Aufgabe? Wie zufrieden waren Sie mit Ihrer Leistung bei der Erfüllung dieser Ziele?"
+          "label": "Eigene Leistung",
+          "description": "Wie erfolgreich haben Sie Ihrer Meinung nach die Ziele der Aufgabe erreicht?"
         },
         "effort": {
           "label": "Anstrengung",
-          "description": "Wie hart mussten Sie arbeiten (geistig und körperlich), um Ihr Leistungsniveau zu erreichen?"
+          "description": "Wie sehr mussten Sie sich anstrengen (mental und körperlich), um Ihren Grad an Aufgabenerfüllung zu erreichen?"
         },
         "frustration": {
           "label": "Frustration",
-          "description": "Wie entmutigt, gestresst, gereizt oder verärgert beziehungsweise wie zufrieden, entspannt, ausgeglichen und selbstsicher fühlten Sie sich während der Aufgabe?"
+          "description": "Wie unsicher, entmutigt, irritiert, gestresst und verärgert (versus sicher, bestätigt, zufrieden, entspannt und zufrieden) fühlten Sie sich während der Aufgabe?"
         }
       }
     },
