@@ -47,7 +47,7 @@ const IFIS_OPTIONS = [
 
 const useStyles = makeStyles((theme) => ({
   mainTitle: {
-    fontSize: '2.6rem',
+    fontSize: '1.8em',
     fontWeight: 900,
     color: '#000000',
   },
@@ -57,34 +57,34 @@ const useStyles = makeStyles((theme) => ({
     color: '#444444',
   },
   card: {
-    padding: theme.spacing(4, 3),
+    padding: theme.spacing(2, 2),
     borderRadius: '16px',
     textAlign: 'center',
   },
   questionTitle: {
-    fontSize: '2.4rem',
+    fontSize: '1.8rem',
     fontWeight: 900,
     lineHeight: 1.25,
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
     color: '#000000',
   },
   questionText: {
-    fontSize: '1.6rem',
+    fontSize: '1.4rem',
     fontWeight: 500,
     color: '#333333',
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(2),
   },
   optionsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing(2.5),
+    gap: theme.spacing(1),
     maxWidth: '650px',
     margin: '0 auto',
   },
   optionButton: {
-    minHeight: '68px',
-    padding: theme.spacing(2, 3),
-    fontSize: '1.5rem',
+    minHeight: '48px',
+    padding: theme.spacing(1, 1),
+    fontSize: '1.4rem',
     fontWeight: 800,
     borderRadius: '14px',
     textTransform: 'none',
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
   progressBar: {
     height: '16px',
     borderRadius: '8px',
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(1),
   },
 }));
 

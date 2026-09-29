@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontWeight: 900,
-    fontSize: '2.6rem',
+    fontSize: '1.8rem',
     marginBottom: theme.spacing(4),
     color: '#000',
   },
@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
   // Floating label styling (default & top position)
   label: {
-    fontSize: '1.6rem !important',
+    fontSize: '1.0rem !important',
     fontWeight: '600 !important',
     color: '#555555 !important',
     backgroundColor: '#ffffff',
     padding: '0 6px',
     '&$labelShrink': {
-      fontSize: '1.25rem !important',
-      fontWeight: '800 !important',
+      fontSize: '1.3rem !important',
+      fontWeight: '700 !important',
       color: '#000000 !important',
       transform: 'translate(14px, -10px) scale(1) !important',
     },
@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
   labelShrink: {},
   // Typed value styling
   inputRoot: {
-    fontSize: '2.0rem !important',
-    fontWeight: '700 !important',
+    fontSize: '1.5rem !important',
+    fontWeight: '600 !important',
     color: '#000000 !important',
   },
   inputElement: {
-    padding: '22px 16px !important',
+    padding: '12px 12px !important',
   },
   submitBtn: {
     marginTop: theme.spacing(4),

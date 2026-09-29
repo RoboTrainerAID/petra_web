@@ -27,16 +27,16 @@ const EXPERIENCE_OPTIONS = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-  title: { fontSize: '2rem', fontWeight: 800 },
-  description: { fontSize: '1.25rem', marginBottom: theme.spacing(2), color: '#333' },
-  fieldLabel: { fontSize: '1.35rem', fontWeight: 700, color: '#000', marginBottom: theme.spacing(1.5) },
+  title: { fontSize: '1.8rem', fontWeight: 800 },
+  description: { fontSize: '1.25rem', marginBottom: theme.spacing(1), color: '#333' },
+  fieldLabel: { fontSize: '1.35rem', fontWeight: 700, color: '#000', marginBottom: theme.spacing(1) },
   inputLarge: {
-    '& .MuiInputBase-root': { fontSize: '1.4rem', height: '64px', borderRadius: '10px' },
+    '& .MuiInputBase-root': { fontSize: '1.4rem', height: '48px', borderRadius: '10px' },
     '& .MuiInputLabel-root': { fontSize: '1.25rem' },
     '& .MuiFormHelperText-root': { fontSize: '1.1rem', marginTop: '8px' },
   },
   radioCard: {
-    padding: '16px 20px',
+    padding: '5px 5px',
     borderRadius: '10px',
     border: '2px solid #ccc',
     display: 'flex',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   actionButton: {
     fontSize: '1.4rem',
     fontWeight: 800,
-    height: '64px',
+    height: '48px',
     padding: '0 48px',
     borderRadius: '12px',
     textTransform: 'none',
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   progressBar: {
     height: '10px',
     borderRadius: '5px',
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(1),
   },
 }));
 

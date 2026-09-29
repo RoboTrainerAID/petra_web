@@ -7,13 +7,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
   },
   questionText: {
-    fontSize: '2.2rem',
+    fontSize: '1.5rem',
     fontWeight: 800,
     lineHeight: 1.3,
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(0),
     color: '#000000',
   },
   optionsList: {
@@ -23,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
   optionButton: {
     width: '100%',
-    padding: theme.spacing(2.5, 3),
-    fontSize: '1.4rem',
+    padding: theme.spacing(1, 2),
+    fontSize: '1.15rem',
     fontWeight: 700,
     justifyContent: 'flex-start',
     textAlign: 'left',

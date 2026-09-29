@@ -1,7 +1,7 @@
 #!/bin/sh
 docker build \
   -t petra_web:dev \
-  --build-arg="BACKEND_URL=http://localhost:5001" \
+  --build-arg="BACKEND_URL=http://192.168.1.5:5001" \
   -f Dockerfile.dev .
 
 echo "Run Container"

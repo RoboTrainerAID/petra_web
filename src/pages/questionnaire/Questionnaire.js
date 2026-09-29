@@ -131,21 +131,28 @@ export default function QuestionnaireContainer() {
   };
 
   const handlePersonalSubmit = async (data) => {
-    setPersonalInfo(data);
-    try {
-      const res = await fetch(`${FLASK_BACKEND_URL}/participants`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      const resData = await res.json();
-      setParticipantDbId(resData.participant_db_id);
-      
-      setScreen('clinical');
-    } catch (err) {
-      console.error("Failed to save personal info:", err);
+  setPersonalInfo(data);
+  try {
+    // Pass data.userId directly in the URL path
+    const res = await fetch(`${FLASK_BACKEND_URL}/participants/${data.userId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error("Backend error:", errorData.message);
+      return;
     }
-  };
+
+    const resData = await res.json();
+    setParticipantDbId(resData.participant_db_id);
+    
+    setScreen('clinical');
+  } catch (err) {
+    console.error("Failed to save personal info:", err);
+  }
+};
 
   const handleClinicalScalesSubmit = async (clinicalData) => {
     try {
@@ -253,15 +260,7 @@ export default function QuestionnaireContainer() {
     <Container disableGutters className={classes.outerContainer}>
       <Paper elevation={3} className={classes.paper}>
         <div className={classes.header}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            {(screen === 'experiments' || screen === 'task_difficulty') && (
-              <Chip
-                label={`Experiment #${expCount}`}
-                color="primary"
-                style={{ fontSize: '1.2rem', height: '44px', fontWeight: 700 }}
-              />
-            )}
-          </Box>
+          
         </div>
 
         <div className={classes.content}>

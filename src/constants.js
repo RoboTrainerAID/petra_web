@@ -1,1 +1,1 @@
-export const FLASK_BACKEND_URL = process.env.REACT_APP_FLASK_BACKEND_URL;
+export const FLASK_BACKEND_URL = "http://192.168.1.5:5001";

@@ -170,12 +170,7 @@ export default function ExperimentStep({
     <Box display="flex" flexDirection="column" gap={2} pb={2}>
       {/* Title Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography variant="h4" style={{ fontWeight: 800 }}>
-          {t('questionnaire.tlx.experimentTitle', {
-            current: experimentIndex + 1,
-            total: totalExperiments,
-          })}
-        </Typography>
+        
         <Typography variant="h6" style={{ fontWeight: 700, color: '#555' }}>
           Question {activeQuestionIndex + 1} of {NASA_KEYS.length}
         </Typography>
