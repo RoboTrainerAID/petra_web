@@ -14,6 +14,7 @@ if [ "$OS" = "Linux" ]; then
       -it \
       --name petra_web \
       --env-file .env \
+      --net host \
       -p 3000:3000 \
       -v "$(pwd)":/home/node/petra_web \
       -v /home/node/petra_web/node_modules \
